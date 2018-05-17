@@ -38,8 +38,13 @@ class empnm(Resource):
         return {'NameSort': []}
 
 class addppl(Resource):
-    def get(self, employee_id):
-        return {'data': []}
+    def post(self):
+        lastname=request.json['lastname']
+        firstname=request.json['firstname']
+        gender=request.json['gender']
+        color=request.json['color']
+        bdate=request.json['birthday']
+
 
 api.add_resource(gender, '/people/gender')
 api.add_resource(birthday, '/people/birthday')

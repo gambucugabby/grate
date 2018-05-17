@@ -11,6 +11,7 @@
 import Erlog
 import time
 import operator
+import filecmp
 
 def ProcFiles(filename, sortTyp):
     sortaDbs = []
@@ -31,15 +32,29 @@ def ProcFiles(filename, sortTyp):
                 sortaDbs.insert(i,lines)
                 i=i+1
 
+    #stick it in a file b/c I'll need it for the REST API
+    filename = 'DaSotraDb'
+    f=open(filename, 'a')
+    for dLn in sortaDbs:
+        f.write(str(dLn))
+    f.close()
+
+    f=open(filename, 'r')
+    DaSotraDbAll = []
+    j=0
+    for rLn in f:
+        DaSotraDbAll.insert(j, rLn)
+        j=j+1
+    f.close()
 
     if sortTyp == 1:
         #This is the sort type of gender (females before males) then last name ascending
-        print sorted(sortaDbs, key=operator.itemgetter(2,1))
+        print sorted(DaSotraDbAll, key=operator.itemgetter(2,1))
     elif sortTyp == 2:
         #This is the sort type of birthdate, ascending
-        print sorted(sortaDbs, key=lambda x: (x[4].split('/')[::-1], x[-1]))
+        print sorted(DaSotraDbAll, key=lambda x: (x[4].split('/')[::-1], x[-1]))
     elif sortTyp == 3:
         #This is the sort type of lastname, descending
-        print sorted(sortaDbs, key=lambda l:l[0], reverse=True)
+        print sorted(DaSotraDbAll, key=lambda l:l[0], reverse=True)
     else:
         ErrLogging (0, 'Invalid Sort Type')

@@ -1,3 +1,3 @@
 import grate
 
-grate.ProcFiles('CommaDelimited')
+grate.ProcFiles(['CommaDelimited','PipeDelimited','SpaceDelimited'], 1)

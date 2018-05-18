@@ -49,12 +49,12 @@ def ProcFiles(filename, sortTyp):
 
     if sortTyp == 1:
         #This is the sort type of gender (females before males) then last name ascending
-        print sorted(DaSotraDbAll, key=operator.itemgetter(2,1))
+        return sorted(DaSotraDbAll, key=operator.itemgetter(2,1))
     elif sortTyp == 2:
         #This is the sort type of birthdate, ascending
-        print sorted(DaSotraDbAll, key=lambda x: (x[4].split('/')[::-1], x[-1]))
+        return sorted(DaSotraDbAll, key=lambda x: (x[4].split('/')[::-1], x[-1]))
     elif sortTyp == 3:
         #This is the sort type of lastname, descending
-        print sorted(DaSotraDbAll, key=lambda l:l[0], reverse=True)
+        return sorted(DaSotraDbAll, key=lambda l:l[0], reverse=True)
     else:
         ErrLogging (0, 'Invalid Sort Type')

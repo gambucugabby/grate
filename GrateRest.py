@@ -6,14 +6,6 @@
 #
 #flask-restful b/c it let sme setup my API endpoints easily
 #
-#Am I cheating?  Arguable.  But no one would write their own web server, JSON-ifier,
-#etc if they were doing this real world.  Good, fast work can be achieved by building
-#on the work of others.  Touchy-feely viewpoint: "We are who we are because we stand on the shoulders
-#of who we were."  Steve Jobs Version (via Picasso): "Good artists copy.  Great artists steal."
-#I am neither an artist of a theif.  For the purpsoes of this, I'm a programmer
-#which lies somewhere intbetween.  Ok...I'll stop as this has now become an example of what
-#comments in code should not be.
-
 #Post records function - any of the 3 formats
 #get - return by gender
 #get - retrun by birthdate
@@ -21,21 +13,21 @@
 from flask import Flask, request
 from flask_restful import Resource, Api
 from json import dumps
+import grate
 
 app = Flask(__name__)
 api = Api(app)
-
 class gender(Resource):
     def get(self):
-        return {'GenderSort': []}
+        return {'GenderSort': dumps(grate.ProcFiles('', 1))}
 
 class birthday(Resource):
     def get(self):
-        return {'BirthdaySort': []}
+        return {'BirthdaySort': dumps(grate.ProcFiles('', 2))}
 
 class empnm(Resource):
     def get(self):
-        return {'NameSort': []}
+        return {'NameSort': dumps(grate.ProcFiles('', 3))}
 
 class addppl(Resource):
     def post(self):
@@ -44,7 +36,7 @@ class addppl(Resource):
         gender=request.json['gender']
         color=request.json['color']
         bdate=request.json['birthday']
-
+        return {'status':'success'}
 
 api.add_resource(gender, '/people/gender')
 api.add_resource(birthday, '/people/birthday')

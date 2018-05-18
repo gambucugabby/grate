@@ -36,16 +36,19 @@ def ProcFiles(filename, sortTyp):
     filename = 'DaSotraDb'
     f=open(filename, 'a')
     for dLn in sortaDbs:
-        f.write(str(dLn))
+        f.write(str(dLn) + '\n')
     f.close()
 
     f=open(filename, 'r')
     DaSotraDbAll = []
     j=0
     for rLn in f:
+        rLn = rLn.rstrip('\n')
+        rLn = rLn.split(',')
         DaSotraDbAll.insert(j, rLn)
         j=j+1
     f.close()
+
 
     if sortTyp == 1:
         #This is the sort type of gender (females before males) then last name ascending
@@ -56,5 +59,8 @@ def ProcFiles(filename, sortTyp):
     elif sortTyp == 3:
         #This is the sort type of lastname, descending
         return sorted(DaSotraDbAll, key=lambda l:l[0], reverse=True)
+    elif sortTyp == 4:
+        #This is the sort type of lastname for RESTAPI
+        return sorted(DaSotraDbAll, key=lambda l:l[0])
     else:
-        ErrLogging (0, 'Invalid Sort Type')
+        ErrLogging (0, 'Invalid return type or ecord added via RESTAPI')

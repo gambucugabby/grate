@@ -27,7 +27,7 @@ class birthday(Resource):
 
 class empnm(Resource):
     def get(self):
-        return {'NameSort': dumps(grate.ProcFiles('', 3))}
+        return {'NameSort': dumps(grate.ProcFiles('', 4))}
 
 class addppl(Resource):
     def post(self):

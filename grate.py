@@ -44,7 +44,11 @@ def ProcFiles(filename, sortTyp):
     j=0
     for rLn in f:
         rLn = rLn.rstrip('\n')
+        rLn = rLn.replace('[','')
+        rLn = rLn.replace(']','')
+        rLn = rLn.replace("'",'')
         rLn = rLn.split(',')
+        print rLn
         DaSotraDbAll.insert(j, rLn)
         j=j+1
     f.close()
@@ -62,5 +66,5 @@ def ProcFiles(filename, sortTyp):
     elif sortTyp == 4:
         #This is the sort type of lastname for RESTAPI
         return sorted(DaSotraDbAll, key=lambda l:l[0])
-    else:
-        ErrLogging (0, 'Invalid return type or ecord added via RESTAPI')
+    #else:
+        #erlog.ErrLogging (0, 'Invalid return type or ecord added via RESTAPI')

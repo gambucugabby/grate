@@ -10,38 +10,53 @@
 #get - return by gender
 #get - retrun by birthdate
 #get - return by name`  ``
-from flask import Flask, request
+from flask import Flask, request, jsonify
 from flask_restful import Resource, Api
 from json import dumps
 import grate
 
 app = Flask(__name__)
 api = Api(app)
+
 class gender(Resource):
     def get(self):
-        return {'GenderSort': dumps(grate.ProcFiles('', 1))}
+        return {'GenderSort': (grate.ProcFiles('', 1))}
 
 class birthday(Resource):
     def get(self):
-        return {'BirthdaySort': dumps(grate.ProcFiles('', 2))}
+        return {'BirthdaySort': (grate.ProcFiles('', 2))}
 
 class empnm(Resource):
     def get(self):
-        return {'NameSort': dumps(grate.ProcFiles('', 4))}
+        return {'NameSort': (grate.ProcFiles('', 4))}
 
 class addppl(Resource):
     def post(self):
-        lastname=request.json['lastname']
-        firstname=request.json['firstname']
-        gender=request.json['gender']
-        color=request.json['color']
-        bdate=request.json['birthday']
+        jsonCntnt = request.get_json(self)
+        dumps(jsonCntnt)
+        lastname = request.json['lastname']
+        firstname = request.json['firstname']
+        gender = request.json['gender']
+        color = request.json['color']
+        bdate = request.json['birthday']
+
+        WrtStr = str(lastname)+","+str(firstname)+","+str(gender)+","+str(color)+","+str(bdate)
+        print WrtStr
+        #write input file for grate to consume...not ideal, and would need to refactor later.
+        f=open('tmpWrtApi', 'w')
+        f.write(WrtStr+'\n')
+        f.close()
+
+        wrtRcds = []
+        wrtRcds.insert(1, 'tmpWrtApi')
+        rslt = grate.ProcFiles(wrtRcds,1234)
+
         return {'status':'success'}
 
 api.add_resource(gender, '/people/gender')
 api.add_resource(birthday, '/people/birthday')
 api.add_resource(empnm, '/people/name')
-api.add_resource(addppl, '/add')
+api.add_resource(addppl, '/people')
 
 
 if __name__ == '__main__':
